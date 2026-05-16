@@ -17,6 +17,14 @@
 /.next/
 /out/
 
+# local data
+/data/
+/public/uploads/
+
+# env
+.env
+.env.local
+
 # production
 /build
 
