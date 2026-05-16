@@ -129,6 +129,7 @@ export async function createImage(data: {
   original_name: string;
   mime_type: string;
   size: number;
+  url?: string;
 }): Promise<ImageRecord> {
   const images = await readData();
   const now = new Date().toISOString();
@@ -140,7 +141,7 @@ export async function createImage(data: {
     original_name: data.original_name,
     mime_type: data.mime_type,
     size: data.size,
-    url: getImageUrl(data.filename),
+    url: data.url || getImageUrl(data.filename),
     created_at: now,
     updated_at: now,
   };

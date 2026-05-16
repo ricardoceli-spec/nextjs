@@ -45,8 +45,10 @@ export async function POST(request: NextRequest) {
     const filename = `${id}${ext}`;
 
     // Upload to blob storage (Vercel) or local disk
+    // Upload to blob storage (Vercel) or local disk — returns the real URL
     const { url } = await uploadImage(file, filename);
 
+    // Pass the real URL to createImage so it's stored in the record
     const image = await createImage({
       id,
       title: title.trim(),
@@ -55,9 +57,10 @@ export async function POST(request: NextRequest) {
       original_name: file.name,
       mime_type: file.type,
       size: file.size,
+      url,
     });
 
-    return Response.json({ success: true, data: { ...image, url } }, { status: 201 });
+    return Response.json({ success: true, data: image }, { status: 201 });
   } catch (error) {
     console.error('Error creating image:', error);
     return Response.json({ success: false, error: 'Failed to create image' }, { status: 500 });
