@@ -50,6 +50,7 @@ async function writeData(images: ImageRecord[]): Promise<void> {
       access: 'public',
       addRandomSuffix: false,
       contentType: 'application/json',
+      allowOverwrite: true,
     });
   } else {
     const fs = await import('fs');
@@ -71,6 +72,7 @@ export async function uploadImage(file: File, filename: string): Promise<{ url: 
     const blob = await put(`${UPLOADS_FOLDER}/${filename}`, Buffer.from(await file.arrayBuffer()), {
       access: 'public',
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
     return { url: blob.url };
   } else {
